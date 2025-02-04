@@ -14,7 +14,7 @@ export const userAuth = async (req) => {
         console.log(cookies().get('token'));
 
         const token = cookies().get('token')?.value;
-        if (!token) throw new Error('Please login!');
+        if (!token) throw new Error('Please loginhjjkhkjhhjkhkjhjh!');
 
         const decodeToken = jwt.verify(token, process.env.JWT_SECRET);
         const user = await User.findById(decodeToken.id);

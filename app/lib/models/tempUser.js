@@ -9,3 +9,9 @@ const tempUserSchema = new mongoose.Schema({
 }, { timestamps: true });
 
 module.exports = mongoose.model("TempUser", tempUserSchema);
+
+
+// // Check if the model is already defined before defining it again
+// const TempUser = mongoose.models.TempUser || mongoose.model("TempUser", tempUserSchema);
+
+// export default TempUser;
