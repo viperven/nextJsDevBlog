@@ -1,9 +1,9 @@
 import { NextResponse } from 'next/server';
 import mongoose from 'mongoose';
-import { connectDB } from "../../../lib/db";
-import { userAuth } from '../../../lib/middleware/auth';
-import { errorHandler } from '../../../lib/middleware/errorHandler';
-import Posts from '../../../lib/models/posts';
+import { connectDB } from "../../../../lib/db";
+import { userAuth } from '../../../../lib/middleware/auth';
+import { errorHandler } from '../../../../lib/middleware/errorHandler';
+import Posts from '../../../../lib/models/posts';
 
 export async function GET(req, { params }) {
     try {

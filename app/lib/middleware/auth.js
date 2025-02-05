@@ -3,7 +3,7 @@ import User from '../models/user';
 import { cookies } from 'next/headers';
 import { connectDB } from '../db';
 
-export const userAuth = async (req) => {
+export const userAuth = async () => {
     try {
         // const header = req.headers.get("authorization");
         // if (!header) {
