@@ -55,6 +55,7 @@ userSchema.methods.generateAuthToken = async function () {
   );
 };
 
-const User = mongoose.model("User", userSchema);
+// Check if the model is already defined before defining it again
+const User = mongoose.models.User || mongoose.model("User", userSchema);
 
-module.exports = User;
+export default User;

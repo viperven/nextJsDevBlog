@@ -10,12 +10,17 @@ export async function connectDB() {
 
   if (!cached.promise) {
     // Create a new connection only if no cached connection exists
-    cached.promise = mongoose.connect(MONGODB_URI, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    }).then((mongoose) => mongoose);
+    cached.promise = mongoose.connect(MONGODB_URI);
   }
 
-  cached.conn = await cached.promise;
+  try {
+    cached.conn = await cached.promise;  // Await the promise to ensure DB connection is established
+    console.log('DB connected successfully!');
+  } catch (error) {
+    console.error('DB connection failed:', error);
+    throw new Error('Failed to connect to the database');
+  }
+
+
   return cached.conn;
 }

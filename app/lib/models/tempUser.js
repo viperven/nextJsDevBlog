@@ -8,10 +8,10 @@ const tempUserSchema = new mongoose.Schema({
     isVerified: { type: Boolean, default: false }  // Flag for verification
 }, { timestamps: true });
 
-module.exports = mongoose.model("TempUser", tempUserSchema);
+// module.exports = mongoose.model("TempUser", tempUserSchema);
 
 
 // // Check if the model is already defined before defining it again
-// const TempUser = mongoose.models.TempUser || mongoose.model("TempUser", tempUserSchema);
+const TempUser = mongoose.models.TempUser || mongoose.model("TempUser", tempUserSchema);
 
-// export default TempUser;
+export default TempUser;
