@@ -2,46 +2,37 @@ import { NextResponse } from 'next/server';
 
 import { userAuth } from '../../../../lib/middleware/auth';
 import { errorHandler } from '../../../../lib/middleware/errorHandler';
+import Activity from '../../../../lib/models/activity';
 import Posts from '../../../../lib/models/posts';
 
-
+// comment on post
 export async function POST(req, { params }) {
     try {
         const postId = params?.id;
         const { _id } = await userAuth();
-        let message = "";
-
+        const { content } = await req.json();
 
         if (!postId) {
             return NextResponse
-
                 .json({ isSuccess: false, message: "Post id is required" }, { status: 400 });
         }
 
         const post = await Posts.findById(postId);
         if (!post) {
             return NextResponse
-
-                .json({ isSuccess: false, message: "Post not found" }, { status: 404 });
+                .json({ isSuccess: false, message: "Post not found" }, { status: 400 });
         }
 
-        let postLike = post.likes.indexOf(_id);
+        const activity = new Activity({ userId: _id, postId, content });
+        await activity.save();
 
-        if (postLike === -1) {
-            postLike = post.likes.push(_id);
-            message = "Post liked successfully";
-        } else {
-            postLike = post.likes.splice(postLike, 1);
-            message = "Post unliked successfully";
-        }
-
-        await post.save();
-
-       return NextResponse.json({
+        return NextResponse.json({
             isSuccess: true,
-            message,
-            apiData: post,
+            message: "Comment added successfully",
+            apiData: activity,
         }, { status: 200 });
+
+
     } catch (err) {
         return errorHandler(err);
     }

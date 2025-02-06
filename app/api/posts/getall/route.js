@@ -21,12 +21,11 @@ export async function GET(req) {
        await connectDB();
         const totalPosts = await Posts.countDocuments(); // Total post count
         const allPosts = await Posts.aggregate([
-            { $lookup: { from: "Activity", localField: "_id", foreignField: "postId", as: "activity" } },
+            { $lookup: { from: "activities", localField: "_id", foreignField: "postId", as: "activity" } },
             { $skip: skipPosts },
             { $limit: pageSize }
         ]);
-
-
+        
        return NextResponse.json({
             isSuccess: true,
             message: "All posts fetched successfully",
