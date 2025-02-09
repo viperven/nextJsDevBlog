@@ -1,4 +1,7 @@
 /** @type {import('tailwindcss').Config} */
+import daisyui from "daisyui";
+import tailwindcssAnimate from "tailwindcss-animate";
+
 export default {
   content: [
     "./pages/**/*.{js,ts,jsx,tsx,mdx}",
@@ -13,5 +16,8 @@ export default {
       },
     },
   },
-  plugins: [],
+  plugins: [daisyui, tailwindcssAnimate],
+  daisyui: {
+    themes: ["light"],
+  },
 };
