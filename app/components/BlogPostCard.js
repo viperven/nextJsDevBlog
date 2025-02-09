@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 
-const BlogPostCard = ({ title, excerpt, author, date, slug, imageUrl }) => {
+const BlogPostCard = ({ title, excerpt, author, date, id, imageUrl }) => {
   return (
     <div className="card w-96 bg-base-100 shadow-xl">
       <figure>
@@ -31,7 +31,7 @@ const BlogPostCard = ({ title, excerpt, author, date, slug, imageUrl }) => {
           <span className="text-sm text-gray-500">{date}</span>
         </div>
         <div className="card-actions justify-end mt-4">
-          <Link href={`/post/${slug}`} className="btn btn-primary">
+          <Link href={`/post/${id}`} className="btn btn-primary">
             Read More
           </Link>
         </div>

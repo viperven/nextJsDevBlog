@@ -7,7 +7,7 @@ const dummyPosts = [
       "Learn how to use React Hooks to manage state and side effects in your functional components.",
     author: "Jane Doe",
     date: "2023-05-15",
-    slug: "intro-to-react-hooks",
+    id: "intro-to-react-hooks",
     imageUrl: "/placeholder.svg?height=200&width=384",
   },
   {
@@ -16,7 +16,7 @@ const dummyPosts = [
       "A comprehensive guide to creating robust and scalable APIs using Node.js and Express.",
     author: "John Smith",
     date: "2023-05-10",
-    slug: "building-restful-apis",
+    id: "building-restful-apis",
     imageUrl: "/placeholder.svg?height=200&width=384",
   },
   {
@@ -25,7 +25,7 @@ const dummyPosts = [
       "Dive deep into CSS Grid and learn how to create complex layouts with ease.",
     author: "Emily Johnson",
     date: "2023-05-05",
-    slug: "mastering-css-grid",
+    id: "mastering-css-grid",
     imageUrl: "/placeholder.svg?height=200&width=384",
   },
 ];
