@@ -1,16 +1,15 @@
-"use client"
-import { useSearchParams,useRouter } from 'next/navigation';
-import React, { useState } from 'react';
+"use client";
+import { useSearchParams, useRouter } from "next/navigation";
+import React, { useState, Suspense } from "react";
 
-export default function SignupPage() {
-
+function Signup() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const callbackUrl = searchParams.get('callbackUrl') || '/dashboard';  // Default to dashboard if no callback
+  const callbackUrl = searchParams.get("callbackUrl") || "/dashboard"; // Default to dashboard if no callback
 
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   const handleSignup = (e) => {
     e.preventDefault();
@@ -20,10 +19,17 @@ export default function SignupPage() {
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
       <div className="w-full max-w-md p-8 space-y-6 bg-white rounded-lg shadow-md">
-        <h2 className="text-2xl font-bold text-center text-gray-800">Create an Account</h2>
+        <h2 className="text-2xl font-bold text-center text-gray-800">
+          Create an Account
+        </h2>
         <form onSubmit={handleSignup} className="space-y-4">
           <div>
-            <label htmlFor="name" className="block text-sm font-medium text-gray-700">Name</label>
+            <label
+              htmlFor="name"
+              className="block text-sm font-medium text-gray-700"
+            >
+              Name
+            </label>
             <input
               type="text"
               id="name"
@@ -34,7 +40,12 @@ export default function SignupPage() {
             />
           </div>
           <div>
-            <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email</label>
+            <label
+              htmlFor="email"
+              className="block text-sm font-medium text-gray-700"
+            >
+              Email
+            </label>
             <input
               type="email"
               id="email"
@@ -45,7 +56,12 @@ export default function SignupPage() {
             />
           </div>
           <div>
-            <label htmlFor="password" className="block text-sm font-medium text-gray-700">Password</label>
+            <label
+              htmlFor="password"
+              className="block text-sm font-medium text-gray-700"
+            >
+              Password
+            </label>
             <input
               type="password"
               id="password"
@@ -55,9 +71,19 @@ export default function SignupPage() {
               required
             />
           </div>
-          <button type="submit" className="btn btn-primary w-full">Sign Up</button>
+          <button type="submit" className="btn btn-primary w-full">
+            Sign Up
+          </button>
         </form>
       </div>
     </div>
+  );
+}
+
+export default function LoginPage() {
+  return (
+    <Suspense fallback={<div>Loading.......</div>}>
+      <Signup />
+    </Suspense>
   );
 }
