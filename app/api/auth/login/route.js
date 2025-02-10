@@ -29,7 +29,7 @@ export async function POST(request) {
             expires: new Date(Date.now() + 8 * 3600000),
         });
 
-        return NextResponse.json({ token }, { status: 200 });
+        return NextResponse.json({ message: "logged in successfully", apiData: token }, { status: 200 });
     } catch (err) {
         return errorHandler(err)
     }
