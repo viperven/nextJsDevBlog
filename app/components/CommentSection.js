@@ -1,22 +1,23 @@
 "use client";
 
+import { ThumbsUp } from "lucide-react";
 import { useState } from "react";
 
-const CommentSection = ({ postSlug }) => {
-  const [comments, setComments] = useState([
-    {
-      id: 1,
-      author: "Alice",
-      content: "Great article! Very informative.",
-      date: "2023-05-20",
-    },
-    {
-      id: 2,
-      author: "Bob",
-      content: "I learned a lot from this. Thanks for sharing!",
-      date: "2023-05-21",
-    },
-  ]);
+const CommentSection = ({ likes, comments }) => {
+  // const [comments, setComments] = useState([
+  //   {
+  //     id: 1,
+  //     author: "Alice",
+  //     content: "Great article! Very informative.",
+  //     date: "2023-05-20",
+  //   },
+  //   {
+  //     id: 2,
+  //     author: "Bob",
+  //     content: "I learned a lot from this. Thanks for sharing!",
+  //     date: "2023-05-21",
+  //   },
+  // ]);
   const [newComment, setNewComment] = useState("");
 
   const handleSubmit = (e) => {
@@ -37,11 +38,16 @@ const CommentSection = ({ postSlug }) => {
     <section className="mt-12">
       <h2 className="text-2xl font-bold mb-4">Comments</h2>
       <div className="space-y-4 mb-8">
-        {comments.map((comment) => (
-          <div key={comment.id} className="bg-gray-100 p-4 rounded-lg">
+        {comments?.map((comment) => (
+          <div key={comment._id} className="bg-gray-100 p-4 rounded-lg">
             <div className="flex justify-between items-center mb-2">
-              <span className="font-semibold">{comment.author}</span>
-              <span className="text-sm text-gray-500">{comment.date}</span>
+              <span className="font-semibold">
+                {comment.userId.name || "rupesh"}
+              </span>
+              <ThumbsUp style={{ cursor: "pointer" }} />
+              {/* <span className="text-sm text-gray-500"> */}
+              {/* {likes.length} */}
+              {/* </span> */}
             </div>
             <p>{comment.content}</p>
           </div>

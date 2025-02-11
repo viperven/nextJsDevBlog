@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import Image from "next/image";
 import { notFound, useParams } from "next/navigation";
@@ -6,7 +6,7 @@ import CommentSection from "../../components/CommentSection";
 import { useEffect, useState } from "react";
 import { BaseUrl } from "../../lib/url";
 
-const previewImgUrl = "/defaultBlog.jpg"
+const previewImgUrl = "/defaultBlog.jpg";
 
 export default function BlogPost() {
   const [post, setPost] = useState([]);
@@ -19,23 +19,18 @@ export default function BlogPost() {
       console.log(data);
 
       if (data?.isSuccess) {
-        setPost(data?.apiData || [])
-      }
-      else {
+        setPost(data?.apiData || []);
+      } else {
         alert("something went wrong file fetching posts ");
       }
-    }
-    catch (err) {
+    } catch (err) {
       console.log(err?.message);
-
     }
-  }
+  };
 
   useEffect(() => {
     fetchPost();
-  }, [])
-
-
+  }, []);
 
   return (
     <article className="container mx-auto px-4 py-8">
@@ -49,8 +44,7 @@ export default function BlogPost() {
       <h1 className="text-4xl font-bold mb-4">{post.title || "blog Title"}</h1>
       <div dangerouslySetInnerHTML={{ __html: post?.content }} />
 
-
-      <CommentSection postSlug={params?.id} />
+      <CommentSection likes={post?.likes} comments={post?.activity} />
     </article>
   );
 }
