@@ -1,7 +1,13 @@
 "use client"
+import { useSearchParams,useRouter } from 'next/navigation';
 import React, { useState } from 'react';
 
 export default function SignupPage() {
+
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const callbackUrl = searchParams.get('callbackUrl') || '/dashboard';  // Default to dashboard if no callback
+
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');

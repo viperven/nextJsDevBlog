@@ -18,15 +18,16 @@ export async function GET(req) {
 
         let skipPosts = (pageNumber - 1) * pageSize;
 
-       await connectDB();
+        await connectDB();
         const totalPosts = await Posts.countDocuments(); // Total post count
         const allPosts = await Posts.aggregate([
             { $lookup: { from: "activities", localField: "_id", foreignField: "postId", as: "activity" } },
+            { $sort: { updatedAt: -1 } },
             { $skip: skipPosts },
             { $limit: pageSize }
         ]);
-        
-       return NextResponse.json({
+
+        return NextResponse.json({
             isSuccess: true,
             message: "All posts fetched successfully",
             totalPages: Math.ceil(totalPosts / pageSize),

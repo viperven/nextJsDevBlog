@@ -3,8 +3,13 @@
 import { BaseUrl } from '../../lib/url';
 import React, { useState } from 'react';
 import { CookieService } from "../../lib/services/CookieService"
+import { useSearchParams, useRouter } from 'next/navigation';
 
 export default function LoginPage() {
+    const router = useRouter();
+    const searchParams = useSearchParams();
+    const callbackUrl = searchParams.get('callbackUrl') || '/';  // Default to dashboard if no callback
+
     const [email, setEmail] = useState('jharupesh669@gmail.com');
     const [password, setPassword] = useState('123456');
 
@@ -13,11 +18,16 @@ export default function LoginPage() {
             e.preventDefault();
             const res = await fetch(`${BaseUrl}auth/login`, { method: "POST", body: JSON.stringify({ email, password }), });
             const data = await res.json();
-            // CookieService?.setCookie("auth-token",data?.apiData,1)
-
+            if (data?.isSuccess) {
+                router.push(callbackUrl);
+            }
+            else {
+                alert("login failed Try Again  " + data?.message)
+            }
         }
         catch (err) {
             console.log(err?.message);
+            alert('Login failed!');
         }
 
     };
