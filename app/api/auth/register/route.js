@@ -8,29 +8,44 @@ import { errorHandler } from "../../../lib/middleware/errorHandler";
 import { validteRegister } from "../../../lib/validation/authValidation";
 
 export async function POST(req) {
-    try {
-        const { name, email, password } = await req.json();
+  try {
+    const { name, email, password } = await req.json();
 
-        validteRegister(name, email, password);
+    validteRegister(name, email, password);
 
-        connectDB();
-        const tempUser = await TempUser.findOne({ email });
+    connectDB();
 
-        if (!tempUser || !tempUser.isVerified)
-            return NextResponse.json({ message: "Email not verified" }, { status: 400 });
+    const isUserAlreadyExists = await User.findOne({ email });
 
-        // Hash password
-        const hashedPassword = await bcrypt.hash(password, 10);
+    if (isUserAlreadyExists)
+      return NextResponse.json(
+        { message: "User already Exits with Email : " + email },
+        { status: 400 }
+      );
 
-        // Save user in users collection
-        const newUser = new User({ name, email, password: hashedPassword });
-        await newUser.save();
+    const tempUser = await TempUser.findOne({ email });
 
-        // Delete temp user entry
-        await TempUser.deleteOne({ email });
+    if (!tempUser || !tempUser.isVerified)
+      return NextResponse.json(
+        { message: "Email not verified" },
+        { status: 400 }
+      );
 
-        NextResponse.json({ message: "Registration successful" }, { status: 200 });
-    } catch (err) {
-        return errorHandler(err)
-    }
-};
+    // Hash password
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    // Save user in users collection
+    const newUser = new User({ name, email, password: hashedPassword });
+    await newUser.save();
+
+    // Delete temp user entry
+    await TempUser.deleteOne({ email });
+
+    return NextResponse.json(
+      { message: "Registration successful" },
+      { status: 200 }
+    );
+  } catch (err) {
+    return errorHandler(err);
+  }
+}
