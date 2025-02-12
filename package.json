@@ -12,6 +12,7 @@
     "bcryptjs": "^2.4.3",
     "dompurify": "^3.2.4",
     "dotenv": "^16.4.7",
+    "framer-motion": "^12.4.2",
     "jose": "^5.9.6",
     "jsonwebtoken": "^9.0.2",
     "lucide-react": "^0.475.0",

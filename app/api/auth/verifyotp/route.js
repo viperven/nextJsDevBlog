@@ -28,7 +28,7 @@ export async function POST(req) {
     await tempUser.save();
 
     return NextResponse.json(
-      { message: "Email verified successfully" },
+      { isSuccess: true, message: "Email verified successfully" },
       { status: 200 }
     );
   } catch (err) {

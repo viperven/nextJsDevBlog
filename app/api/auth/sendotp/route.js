@@ -38,7 +38,7 @@ export async function POST(req) {
         // Send OTP via email
         sendOtpbyEmail(email, otp);
 
-        return NextResponse.json({ message: "OTP sent to email" }, { status: 200 });
+        return NextResponse.json({ isSuccess: true, message: "OTP sent to email" }, { status: 200 });
     } catch (err) {
         return errorHandler(err)
     }

@@ -42,7 +42,7 @@ export async function POST(req) {
     await TempUser.deleteOne({ email });
 
     return NextResponse.json(
-      { message: "Registration successful" },
+      {isSuccess: true, message: "Registration successful" },
       { status: 200 }
     );
   } catch (err) {
