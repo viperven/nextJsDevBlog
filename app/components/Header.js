@@ -19,7 +19,7 @@ const Header = () => {
   const navItems = [
     { href: "/", label: "Home" },
     { href: "/about", label: "About" },
-    { href: "/write", label: "Write" },
+    { href: "/post/create", label: "Write" },
   ]
 
   const handleLogout = async () => {

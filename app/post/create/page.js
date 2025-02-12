@@ -6,7 +6,7 @@ import "quill/dist/quill.snow.css";
 import { BaseUrl } from "../../lib/url";
 import Image from "next/image";
 
-const staticImgUrl = "/defaultProfile.png";
+const previewImgUrl = "/defaultBlog.jpg"
 
 export default function CreatePost() {
   const [imageUrl, setImageUrl] = useState("");
@@ -28,7 +28,7 @@ export default function CreatePost() {
     try {
       const res = await fetch(`${BaseUrl}posts/create`, {
         method: "POST",
-        body: JSON.stringify({ content, image: imageUrl || staticImgUrl }),
+        body: JSON.stringify({ content, image: imageUrl || previewImgUrl }),
       });
       const data = await res.json();
       if (data?.isSuccess) {
@@ -88,11 +88,11 @@ export default function CreatePost() {
           className="object-cover h-48 w-full"
         /> */}
               <Image
-                src={imageUrl || "/placeholder.svg"}
+                src={imageUrl || previewImgUrl}
                 alt="adsad"
                 width={384}
                 height={200}
-                className="object-cover h-48 w-full"
+                className="object-contain h-56  w-full"
               />
             </figure>
             <div dangerouslySetInnerHTML={{ __html: content }} />
