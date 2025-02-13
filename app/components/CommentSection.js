@@ -1,38 +1,54 @@
 "use client";
 
 import { ThumbsUp } from "lucide-react";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { AuthContext } from "../lib/contexts/AuthContext";
+import { BaseUrl } from "../lib/url";
+import { useParams } from "next/navigation";
 
-const CommentSection = ({ likes, comments }) => {
-  // const [comments, setComments] = useState([
-  //   {
-  //     id: 1,
-  //     author: "Alice",
-  //     content: "Great article! Very informative.",
-  //     date: "2023-05-20",
-  //   },
-  //   {
-  //     id: 2,
-  //     author: "Bob",
-  //     content: "I learned a lot from this. Thanks for sharing!",
-  //     date: "2023-05-21",
-  //   },
-  // ]);
+const CommentSection = ({ likes, comments, fetchPost }) => {
+  const { user, setUser } = useContext(AuthContext);
+  const params = useParams();
   const [newComment, setNewComment] = useState("");
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (newComment.trim()) {
-      const comment = {
-        id: comments.length + 1,
-        author: "Anonymous", // In a real app, this would be the logged-in user
-        content: newComment,
-        date: new Date().toISOString().split("T")[0],
-      };
-      setComments([...comments, comment]);
-      setNewComment("");
+      const res = await fetch(`${BaseUrl}activity/commentonpost/${params?.id}`,
+        { method: "POST", body: JSON.stringify({ content: newComment }) })
+      const data = await res.json();
+      if (data?.isSuccess) {
+        setNewComment("");
+        fetchPost();
+        // alert("sucessfully added comment");
+      }
+      else {
+        alert("something went wrong try again")
+      }
     }
   };
+
+
+  const handleToogleCommentLike = async () => {
+    try {
+      const res = await fetch(`${BaseUrl}activity/togglecommentlike/${params?.id}`,
+        { method: "POST" })
+      const data = await res.json();
+      if (data?.isSuccess) {
+        setNewComment("");
+        fetchPost();
+        // alert("sucessfully added comment");
+      }
+      else {
+        alert("something went wrong try again")
+      }
+    }
+    catch (err) {
+
+      console.log(err?.message);
+
+    }
+  }
 
   return (
     <section className="mt-12">
@@ -44,7 +60,7 @@ const CommentSection = ({ likes, comments }) => {
               <span className="font-semibold">
                 {comment.userId.name || "rupesh"}
               </span>
-              <ThumbsUp style={{ cursor: "pointer" }} />
+              <ThumbsUp style={{ cursor: "pointer" }} onClick={handleToogleCommentLike} />
               {/* <span className="text-sm text-gray-500"> */}
               {/* {likes.length} */}
               {/* </span> */}

@@ -12,7 +12,6 @@ export async function POST(req) {
 
     connectDB();
     const tempUser = await TempUser.findOne({ email });
-    console.log(tempUser, "tempuser");
 
     if (!tempUser)
       return NextResponse.json(

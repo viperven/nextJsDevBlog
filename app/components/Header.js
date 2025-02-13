@@ -26,8 +26,6 @@ const Header = () => {
     try {
       const res = await fetch(`${BaseUrl}auth/logout`, { method: "GET" });
       const data = await res.json();
-      console.log(data);
-
       window.location.href = '/auth/login';
     } catch (error) {
       console.error('Logout failed', error);

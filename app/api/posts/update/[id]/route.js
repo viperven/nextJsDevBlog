@@ -12,8 +12,6 @@ export async function POST(req, { params }) {
         const postId = params?.id;
 
         if (!postId) {
-            console.log("why");
-
             return NextResponse
                 .json({ isSuccess: false, message: "Post id is required" }, { status: 400 });
         }

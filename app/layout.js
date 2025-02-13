@@ -1,7 +1,11 @@
+
+
 import Footer from "./components/Footer";
 import Header from "./components/Header";
 import "./globals.css";
 import { Inter } from "next/font/google";
+
+import { AuthProvider } from "./lib/contexts/AuthContext";
 
 export const metadata = {
   title: "Create Next App",
@@ -14,11 +18,13 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" data-theme="light">
       <body className={inter.className}>
-        <div className="flex flex-col min-h-screen">
-          <Header />
-          <main className="flex-grow">{children}</main>
-          <Footer />
-        </div>
+        <AuthProvider>
+          <div className="flex flex-col min-h-screen">
+            <Header />
+            <main className="flex-grow">{children}</main>
+            <Footer />
+          </div>
+        </AuthProvider>
       </body>
     </html>
   );

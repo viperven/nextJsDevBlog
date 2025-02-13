@@ -3,21 +3,21 @@
 import Image from "next/image";
 import { notFound, useParams } from "next/navigation";
 import CommentSection from "../../components/CommentSection";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { BaseUrl } from "../../lib/url";
+import { AuthContext } from "../../lib/contexts/AuthContext";
 
 const previewImgUrl = "/defaultBlog.jpg";
 
 export default function BlogPost() {
   const [post, setPost] = useState([]);
   const params = useParams();
+  const {user,setUser} = useContext(AuthContext);
 
   const fetchPost = async () => {
     try {
       const res = await fetch(`${BaseUrl}posts/get/${params?.id}`);
       const data = await res.json();
-      console.log(data);
-
       if (data?.isSuccess) {
         setPost(data?.apiData || []);
       } else {
@@ -44,7 +44,7 @@ export default function BlogPost() {
       <h1 className="text-4xl font-bold mb-4">{post.title || "blog Title"}</h1>
       <div dangerouslySetInnerHTML={{ __html: post?.content }} />
 
-      <CommentSection likes={post?.likes} comments={post?.activity} />
+      <CommentSection likes={post?.likes} comments={post?.activity} fetchPost={fetchPost} />
     </article>
   );
 }

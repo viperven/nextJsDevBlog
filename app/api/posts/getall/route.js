@@ -6,8 +6,6 @@ import { connectDB } from "../../../lib/db";
 
 export async function GET(req) {
     try {
-        console.log(new URL(req.url));
-
         let { pageNumber, pageSize } = new URL(req.url);
 
         pageNumber = parseInt(pageNumber) || 1;

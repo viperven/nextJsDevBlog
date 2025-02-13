@@ -32,7 +32,7 @@ export default function EditBlogPost() {
       else {
         alert("error while fetching")
       }
-      console.log(data);
+ 
     }
     catch (err) {
       console.log(err?.message);
@@ -57,9 +57,7 @@ export default function EditBlogPost() {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    // In a real app, you would send this data to your API
-    console.log("Updating post:", { title, content, imageUrl })
-    // After successful update, redirect to the post page
+
     router.push(`/post/${params?.id}`)
   }
 

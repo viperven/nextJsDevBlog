@@ -41,7 +41,6 @@ export default function Home() {
       const res = await fetch(`${BaseUrl}posts/getall`);
       const data = await res.json();
       setPost(data?.apiData || []);
-      console.log(data);
     } catch (error) {
       console.error("Error fetching posts", error);
     }
