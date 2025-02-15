@@ -1,0 +1,224 @@
+// what is average number of tags per user
+m-2
+[
+  {
+    $addFields: {
+      tagsCount:{
+        $size:{$ifNull:["$tags",[]]}
+      },
+    }
+  },
+  {
+    $group: {
+      _id: null,
+      averageNumberOFtags:{$avg:"$tagsCount"}
+    }
+  }
+]
+
+// who has registered most recentely
+
+[
+  {
+    $sort: {
+      registered: -1
+    }
+  },
+  {
+    $limit: 5
+  }
+]
+
+
+// categorizes users by their favorite fruit
+
+[
+  {
+    $group: {
+      _id: "$favoriteFruit",
+      count: {
+        $sum: 1
+      }
+    }
+  }
+]
+
+
+// how many users have ad as the second tag ub their list of tags?
+
+[
+  {
+    $match: {
+     "tags.1":"ad" 
+    }
+  },
+  {
+    $count: 'numberOfUsersWhose2TagsIsAd'
+  }
+]
+
+//find users who have both "enim" and "id" as their tags.
+[
+  {
+    $match: {
+      "tags":{$all:["enim","id"]}
+    }
+  }
+]
+
+//list all the companies located in the USA with their corresponding user count
+
+[
+  {
+    $match: {
+    "company.location.country":"USA"
+    }
+  },
+  {
+    $group: {
+      _id: "$company.title",
+      usecount: {
+        $sum: 1
+      }
+    }
+  }
+  
+]
+
+
+👉 Question: How many employees are there in each department?
+[
+  {
+    $group: {
+      _id: "$department",
+      count: {
+        $sum: 1
+      }
+    }
+  }
+]
+
+👉 Question: What is the average salary for each department?
+[
+  {
+    $group: {
+      _id: "$department",
+      average: {
+        $avg: "$salary"
+      }
+    }
+  }
+]
+
+👉 Question: How many employees are located in each city?
+[
+  {
+    $group: {
+      _id: "$city",
+      count: {
+        $sum: 1
+      }
+    }
+  }
+]
+
+👉 Question: Get all employees who earn more than $75,000.
+[
+  {
+    $match: {
+      salary:{$gt:75000}
+    }
+  }
+]
+
+👉 Find the Highest Paid Employee in Each Department
+
+[
+  {
+    $group: {
+      _id: "$department",
+      maxSalaryByDepartment: {
+        $max: "$salary"
+      },
+      name:{
+        $push:{name:"$name",salary:"$salary"}
+      }
+    }
+  }
+]
+
+👉 Question: Get all employees sorted by salary from highest to lowest.
+
+[
+  {
+    $group: {
+      _id: "$city",
+      totalSalPidPerCity: {
+        $sum: "$salary"
+      },
+      nameAndSalr:{
+        $push:{name:"$name",sal:"$salary"}
+      }
+    }
+  }
+]
+
+👉 Question: Who is the youngest and oldest employee ?
+[
+  {
+    $group: {
+      _id: null,
+      youngestAge: { $min: "$age" },
+      oldestAge: { $max: "$age" }
+    }
+  },
+  {
+    $lookup: {
+      from: "employees",
+      localField: "youngestAge",
+      foreignField: "age",
+      as: "youngestEmployee"
+    }
+  },
+  {
+    $lookup: {
+      from: "employees",
+      localField: "oldestAge",
+      foreignField: "age",
+      as: "oldestEmployee"
+    }
+  }
+]
+
+
+// 👉 Question: What percentage  of employees work  in each department?
+
+([
+  {
+    $group: {
+      _id: "$department",
+      count: { $sum: 1 } // Count employees per department
+    }
+  },
+  {
+    $group: {
+      _id: null,
+      totalEmployees: { $sum: "$count" },
+      departments: { $push: { department: "$_id", count: "$count" } }
+    }
+  },
+  {
+    $unwind: "$departments"
+  },
+  {
+    $project: {
+      _id: 0,
+      department: "$departments.department",
+      employeeCount: "$departments.count",
+      percentage: { 
+        $multiply: [{ $divide: ["$departments.count", "$totalEmployees"] }, 100] 
+      }
+    }
+  }
+  
+])
