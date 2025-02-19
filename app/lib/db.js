@@ -2,6 +2,10 @@ import mongoose from "mongoose";
 
 const MONGODB_URI = process.env.devConnection;
 
+if (!MONGODB_URI) {
+  throw new Error("❌ MONGODB_URI is not defined in environment variables!");
+}
+
 // Global cache object (only works in serverless environments)
 let cached = global.mongoose || { conn: null, promise: null };
 

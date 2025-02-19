@@ -1,37 +1,8 @@
 "use client";
+
 import { useEffect, useState } from "react";
 import BlogPostCard from "./components/BlogPostCard";
 import { BaseUrl } from "./lib/url";
-
-const dummyPosts = [
-  {
-    title: "Introduction to React Hooks",
-    excerpt:
-      "Learn how to use React Hooks to manage state and side effects in your functional components.",
-    author: "Jane Doe",
-    date: "2023-05-15",
-    id: "intro-to-react-hooks",
-    imageUrl: "/placeholder.svg?height=200&width=384",
-  },
-  {
-    title: "Building RESTful APIs with Node.js and Express",
-    excerpt:
-      "A comprehensive guide to creating robust and scalable APIs using Node.js and Express.",
-    author: "John Smith",
-    date: "2023-05-10",
-    id: "building-restful-apis",
-    imageUrl: "/placeholder.svg?height=200&width=384",
-  },
-  {
-    title: "Mastering CSS Grid Layout",
-    excerpt:
-      "Dive deep into CSS Grid and learn how to create complex layouts with ease.",
-    author: "Emily Johnson",
-    date: "2023-05-05",
-    id: "mastering-css-grid",
-    imageUrl: "/placeholder.svg?height=200&width=384",
-  },
-];
 
 export default function Home() {
   const [post, setPost] = useState([]);
